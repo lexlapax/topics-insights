@@ -203,11 +203,6 @@ MIT
 
 ### For Developers and AI Agents (Cursor, GitHub Copilot, Codeium etc. use this section as system prompts guidelines)
 
-#### 0. General Guidelines
-- read and understand all *.txt and *.md files startin in the root directory and recursively in all subdirectories
-- try to load and understand all other files and web url links referenced in those files first.
-- proactively load the reference files to create a context for the project before acting and responding to requests.
-- 
 
 #### 1. Test File Creation
 - Create test file BEFORE implementation file

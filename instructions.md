@@ -1,60 +1,11 @@
 # Product Requirements Document (PRD): Daily Topic News Summarizer
 
-## Development Philosophy
-
-### Test-Driven Development (TDD)
-This project follows a strict test-driven development approach. The workflow for any new feature or change is:
-
-1. **Write Tests First**
-   - Write test cases before implementing any functionality
-   - Tests should cover both happy path and edge cases
-   - Tests should be descriptive and serve as documentation
-   - Run tests to verify they fail (Red phase)
-
-2. **Implement Code**
-   - Write minimal code to make tests pass
-   - Focus on functionality, not optimization
-   - Run tests frequently during implementation
-   - Get to passing tests (Green phase)
-
-3. **Refactor**
-   - Clean up and optimize code while keeping tests green
-   - Improve code organization and readability
-   - Run tests after every refactoring step
-   - Maintain test coverage above 70%
-
-### Testing Guidelines
-- Every feature must have corresponding tests
-- Run tests after ANY code change, no matter how trivial
-- Test coverage is monitored and maintained
-- Tests should be:
-  - Independent (no test should depend on another)
-  - Repeatable (same results every time)
-  - Self-validating (no manual verification needed)
-  - Timely (written before the code they test)
-
-### Example Test-First Workflow
-```python
-# 1. Write test first
-def test_analyze_topic():
-    """Test topic analysis functionality."""
-    agent = OpenAIAgent(api_key="test-key", model="gpt-4o")
-    result = await agent.analyze_topic("test topic")
-    assert "analysis" in result
-    assert "tokens_used" in result
-    assert result["model"] == "gpt-4o"
-
-# 2. Run test (it should fail)
-# 3. Implement the feature
-# 4. Run test again (should pass)
-# 5. Refactor if needed (keep running tests)
-```
-
-**1. Introduction**
+## 1. Introduction
 
 This document outlines the requirements for a web application, "Topic Insights," designed to generate daily running news summaries around user-defined topics. The application leverages various APIs (search engines, news sites, YouTube, research paper sites) to gather, collate, deduplicate, and summarize news content, providing users with a comprehensive overview of developments in their areas of interest.
 
-**2. Goals**
+
+## 2. Goals
 
 *   Provide a centralized platform: Offer a single location for users to stay informed about specific topics by receiving daily, concise news summaries.
 *   Save time and effort: Eliminate the need for users to manually search and filter through multiple sources to stay up-to-date.
@@ -62,7 +13,7 @@ This document outlines the requirements for a web application, "Topic Insights,"
 *   Enable insightful discovery: Surface key concepts and entities related to each news story for deeper understanding and potential research.
 *   Scalable and maintainable: Build a robust and scalable system to support a growing number of topics and users.
 
-**3. Target Audience**
+## 3. Target Audience
 
 *   Researchers: Staying updated on the latest research and developments in their fields.
 *   Journalists: Gathering background information and tracking emerging trends for their reporting.
@@ -70,13 +21,14 @@ This document outlines the requirements for a web application, "Topic Insights,"
 *   Students: Learning about current events and researching specific topics.
 *   Anyone interested in staying informed: General users who want to easily follow developments in areas they are passionate about.
 
-**4. Product Overview**
+
+## 4. Product Overview
 
 Topic Insights is a web application that automates the process of gathering, summarizing, and analyzing news content related to user-defined topics. The application fetches data from multiple sources, uses advanced algorithms to identify relevant information, deduplicates articles, generates concise summaries, and extracts key concepts. The summaries and metadata are stored for future access and analysis.
 
-**5. Features**
+## 5. Features
 
-**5.1 Core Features**
+### 5.1 Core Features
 
 *   **Topic Management:**
     *   **Topic Creation:** Users can create new topics by providing keywords or search queries.
@@ -105,7 +57,7 @@ Topic Insights is a web application that automates the process of gathering, sum
         *   Extracted keywords and entities related to the news stories.
     *   **Search Functionality:** Ability to search within existing summaries and articles based on keywords.
 
-**5.2 Additional Features (Future Considerations)**
+### 5.2 Additional Features (Future Considerations)
 
 *   Sentiment Analysis: Analyze the sentiment (positive, negative, neutral) of each article and summary.
 *   Trend Analysis: Identify emerging trends and patterns within the news related to a specific topic.
@@ -115,7 +67,7 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   API for External Use: Allow other applications or services to access the Topic Insights data and summaries.
 *   RSS Feed: Generate RSS feeds for each topic to allow users to subscribe via their favorite news readers.
 
-**6. Functional Requirements**
+## 6. Functional Requirements
 
 *   The system should be able to handle multiple concurrent users and topics.
 *   The system should be able to fetch data from the specified APIs in a timely manner.
@@ -126,7 +78,8 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   The system should provide a user-friendly interface for managing topics and viewing summaries.
 *   The system should provide adequate logging and monitoring for debugging and performance analysis.
 
-**7. Non-Functional Requirements**
+
+## 7. Non-Functional Requirements
 
 *   **Performance:**
     *   The system should generate daily summaries within a reasonable timeframe (e.g., within 1 hour).
@@ -145,7 +98,8 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   **Accessibility:**
     *   The web application should adhere to accessibility guidelines (e.g., WCAG) to ensure usability for users with disabilities.
 
-**8. Technical Requirements**
+
+## 8. Technical Requirements
 
 *   **Programming Languages:** Python (preferred for backend processing), JavaScript (for frontend).
 *   **Frameworks:** Flask/Django (Python backend), React/Angular/Vue.js (JavaScript frontend).
@@ -155,7 +109,7 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   **Deployment:** Docker and Kubernetes for containerization and orchestration.
 *   **Natural Language Processing (NLP) Libraries:** NLTK, spaCy, or transformers for summarization and entity extraction.
 
-**9. Release Criteria**
+## 9. Release Criteria
 
 *   All core features are implemented and tested.
 *   The system meets all functional and non-functional requirements.
@@ -163,7 +117,8 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   Documentation is complete and up-to-date.
 *   User acceptance testing (UAT) is completed with satisfactory results.
 
-**10. Success Metrics**
+
+## 10. Success Metrics
 
 *   User Adoption Rate: Number of active users per month.
 *   Topic Creation Rate: Number of topics created per month.
@@ -171,14 +126,15 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   User Satisfaction: Measured through surveys and feedback.
 *   System Performance: Monitoring of API response times, summary generation time, and error rates.
 
-**11. Future Considerations**
+
+## 11. Future Considerations
 
 *   Integrate with more data sources (e.g., blogs, social media).
 *   Implement advanced NLP techniques for more accurate summarization and entity extraction.
 *   Develop a mobile app for on-the-go access.
 *   Personalize the user experience based on individual preferences and interests.
 
-**12. Development Process**
+## 12. Development Process
 
 ### Test-First Implementation Order
 1. Core Agent Infrastructure
@@ -229,3 +185,16 @@ content_copy
 download
 Use code with caution.
 Markdown
+
+## 13. Development Guide for AI Agents (Cursor, GitHub Copilot, Codeium etc.)
+    use this section as system prompts guidelines for AI agents.
+
+### 0. Pre-requisites and General Guidelines
+- read and understand all *.txt and *.md files starting in the root directory and recursively in all subdirectories
+- load and understand all other files and web url links referenced in those files first.
+- proactively load the reference files to create a context for the project before acting and responding to requests.
+- understand the overall purpose of the project and the goals of the development team.
+- understand the overall code base and the architecture of the project.
+- documentation first
+- testing code second
+
