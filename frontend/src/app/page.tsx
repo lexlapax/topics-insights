@@ -2,16 +2,18 @@
 
 import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+interface HealthCheckResponse {
+  status: string;
+  version: string;
+}
 
 export default function Home() {
-  const { data: healthCheck, isLoading, error } = useQuery({
-    queryKey: ['health'],
+  const { data: healthCheck, isLoading, error } = useQuery<HealthCheckResponse>({
+    queryKey: ['healthCheck'],
     queryFn: async () => {
-      const response = await axios.get(`${API_URL}/api/v1/health`);
-      return response.data;
+      const response = await fetch('http://localhost:8000/');
+      return response.json();
     },
   });
 
@@ -29,14 +31,10 @@ export default function Home() {
           <Heading as="h2" size="md" mb={4}>
             System Status
           </Heading>
-          {isLoading && <Text>Checking system status...</Text>}
-          {error && <Text color="red.500">Error connecting to backend</Text>}
+          {isLoading && <Text>Loading status...</Text>}
+          {error && <Text color="red.500">Error loading status</Text>}
           {healthCheck && (
-            <VStack align="stretch" spacing={2}>
-              <Text>API Status: {healthCheck.services.api}</Text>
-              <Text>Database Status: {healthCheck.services.database}</Text>
-              <Text>LLM Status: {healthCheck.services.llm}</Text>
-            </VStack>
+            <Text>Status: {healthCheck.status}</Text>
           )}
         </Box>
       </VStack>
