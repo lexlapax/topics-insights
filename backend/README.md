@@ -61,21 +61,41 @@ backend/
 ├── src/
 │   └── topic_insights/
 │       ├── __init__.py
-│       └── main.py
+│       └── main.py          # FastAPI application
 ├── tests/
-│   └── test_health.py
-├── pyproject.toml    # Project configuration and dependencies
-└── README.md        # This file
+│   └── test_health.py       # Health endpoint tests
+├── pyproject.toml          # Project configuration
+└── README.md              # This file
 ```
 
 ## Current Features
 
-- ✅ FastAPI application setup
+- ✅ FastAPI 0.104.0 setup
 - ✅ Health check endpoints
 - ✅ CORS configuration
-- ✅ Test infrastructure with pytest
-- ✅ Code quality tools (Black, Ruff, MyPy)
+- ✅ Test infrastructure (pytest + coverage)
+- ✅ Code quality tools (Black + Ruff + MyPy)
 - ✅ Git integration
+
+## TODO List
+
+### High Priority
+- [ ] Set up Supabase client and database schema
+- [ ] Implement user authentication
+- [ ] Create topic management endpoints
+- [ ] Add error handling middleware
+
+### Medium Priority
+- [ ] Set up LLM integration
+- [ ] Add request validation
+- [ ] Implement rate limiting
+- [ ] Add API documentation
+
+### Low Priority
+- [ ] Add logging system
+- [ ] Implement background tasks
+- [ ] Add metrics collection
+- [ ] Create admin endpoints
 
 ## API Endpoints
 
@@ -135,6 +155,13 @@ git push origin feature/backend-feature-name
 - Click "New Pull Request"
 - Select your feature branch
 - Add description and request review
+
+## Troubleshooting
+
+- **Tests fail**: Ensure virtual environment is activated and dependencies installed
+- **Server won't start**: Check if port 8000 is in use
+- **Import errors**: Verify you're in the correct directory with activated environment
+- **Dependency issues**: Try removing .venv and reinstalling dependencies
 
 ## License
 

@@ -16,6 +16,10 @@ cd topics-insights/frontend
 
 2. **Install Dependencies**:
 ```bash
+# Use correct Node.js version
+nvm use 18.17.0  # Install if needed: nvm install 18.17.0
+
+# Install packages
 npm install
 ```
 
@@ -47,8 +51,8 @@ frontend/
 │   ├── app/
 │   │   ├── page.tsx        # Home page
 │   │   ├── layout.tsx      # Root layout
-│   │   └── providers.tsx   # App providers
-│   └── components/
+│   │   └── providers.tsx   # App providers (React Query + Chakra UI)
+│   └── components/         # Shared components
 ├── __tests__/             # Test files
 ├── public/                # Static files
 ├── package.json          # Project configuration
@@ -57,13 +61,33 @@ frontend/
 
 ## Current Features
 
-- ✅ Next.js 14 setup
-- ✅ React Query for data fetching
-- ✅ Chakra UI for styling
+- ✅ Next.js 14.1.0 setup
+- ✅ React Query v5 integration
+- ✅ Chakra UI v2 integration
 - ✅ TypeScript configuration
 - ✅ Jest + React Testing Library setup
 - ✅ ESLint + Prettier configuration
 - ✅ Git integration
+
+## TODO List
+
+### High Priority
+- [ ] Create authentication pages (login/register)
+- [ ] Add topic creation form
+- [ ] Implement topic list view
+- [ ] Add error boundaries and loading states
+
+### Medium Priority
+- [ ] Add topic detail view
+- [ ] Create reusable components
+- [ ] Implement data caching
+- [ ] Add form validation
+
+### Low Priority
+- [ ] Add dark mode support
+- [ ] Implement keyboard shortcuts
+- [ ] Add analytics tracking
+- [ ] Create mobile-responsive design
 
 ## Available Scripts
 
@@ -123,6 +147,14 @@ git push origin feature/frontend-feature-name
 - Click "New Pull Request"
 - Select your feature branch
 - Add description and request review
+
+## Troubleshooting
+
+- **Tests fail**: Verify Node.js version (18.17.0+)
+- **Server won't start**: Check if port 3000 is in use
+- **Module errors**: Run `npm install` again
+- **Type errors**: Run `tsc --noEmit` to check types
+- **Jest errors**: Check babel configuration and test setup
 
 ## License
 
