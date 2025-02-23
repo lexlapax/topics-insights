@@ -2,12 +2,18 @@
 
 A web application for analyzing and extracting insights from topics using LLM-based agents.
 
+## Repository
+
+- GitHub: https://github.com/lexlapax/topics-insights
+- Clone: `git clone https://github.com/lexlapax/topics-insights.git`
+
 ## Project Structure
 
 ```
 .
 ├── backend/          # FastAPI backend service
 ├── frontend/         # Next.js frontend application
+├── .gitignore       # Git ignore patterns
 └── README.md        # This file
 ```
 
@@ -18,6 +24,13 @@ A web application for analyzing and extracting insights from topics using LLM-ba
 - Python 3.9 or higher
 - Node.js 18.17 or higher (recommended: use nvm)
 - Git
+
+### Clone Repository
+
+```bash
+git clone https://github.com/lexlapax/topics-insights.git
+cd topics-insights
+```
 
 ### Backend Setup
 
@@ -79,6 +92,7 @@ curl http://localhost:8000/api/v1/health
 - ✅ Basic FastAPI setup
 - ✅ Health check endpoints
 - ✅ Test infrastructure
+- ✅ Git integration
 - ⏳ Supabase integration (pending)
 - ⏳ LLM agent integration (pending)
 
@@ -88,20 +102,42 @@ curl http://localhost:8000/api/v1/health
 - ✅ Chakra UI integration
 - ✅ Basic health check page
 - ✅ Test infrastructure
+- ✅ Git integration
 - ⏳ Topic analysis UI (pending)
 
 ## Development
 
 ### Git Workflow
 
-1. **Initial Setup**:
+1. **Get Latest Code**:
 ```bash
-git init
-git add .
-git commit -m "Initial commit: Project setup"
+git pull origin main
 ```
 
-2. **Branch Strategy**:
+2. **Create Feature Branch**:
+```bash
+git checkout -b feature/your-feature-name
+```
+
+3. **Make Changes**:
+```bash
+# Make your changes
+git add .
+git commit -m "feat: your feature description"
+```
+
+4. **Push Changes**:
+```bash
+git push origin feature/your-feature-name
+```
+
+5. **Create Pull Request**:
+- Visit: https://github.com/lexlapax/topics-insights/pulls
+- Click "New Pull Request"
+- Select your feature branch
+- Add description and request review
+
+### Branch Strategy
 - `main`: Production-ready code
 - `develop`: Development branch
 - Feature branches: `feature/feature-name`

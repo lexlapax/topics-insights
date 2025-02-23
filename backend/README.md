@@ -2,15 +2,25 @@
 
 FastAPI-based backend service for Topic Insights application.
 
+## Repository
+
+This is part of the [Topic Insights](https://github.com/lexlapax/topics-insights) project.
+
 ## Setup
 
-1. **Create Virtual Environment**:
+1. **Clone Repository**:
+```bash
+git clone https://github.com/lexlapax/topics-insights.git
+cd topics-insights/backend
+```
+
+2. **Create Virtual Environment**:
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-2. **Install Dependencies**:
+3. **Install Dependencies**:
 ```bash
 # Install uv for faster package installation
 pip install uv
@@ -65,6 +75,7 @@ backend/
 - ✅ CORS configuration
 - ✅ Test infrastructure with pytest
 - ✅ Code quality tools (Black, Ruff, MyPy)
+- ✅ Git integration
 
 ## API Endpoints
 
@@ -91,20 +102,39 @@ backend/
 
 ## Git Workflow
 
-1. **Initial Setup**:
+1. **Get Latest Code**:
 ```bash
-git init
-git add .
-git commit -m "feat: Initial backend setup"
+git pull origin main
 ```
 
-2. **Development**:
+2. **Create Feature Branch**:
 ```bash
-git checkout -b feature/your-feature
-# Make changes
-git add .
-git commit -m "feat: Add your feature"
+git checkout -b feature/backend-feature-name
 ```
+
+3. **Make Changes**:
+```bash
+# Make your changes
+# Run tests
+pytest
+# Format and lint
+black .
+ruff check .
+# Commit
+git add .
+git commit -m "feat: your backend feature description"
+```
+
+4. **Push Changes**:
+```bash
+git push origin feature/backend-feature-name
+```
+
+5. **Create Pull Request**:
+- Visit: https://github.com/lexlapax/topics-insights/pulls
+- Click "New Pull Request"
+- Select your feature branch
+- Add description and request review
 
 ## License
 

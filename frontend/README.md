@@ -2,14 +2,24 @@
 
 Next.js-based frontend for Topic Insights application.
 
+## Repository
+
+This is part of the [Topic Insights](https://github.com/lexlapax/topics-insights) project.
+
 ## Setup
 
-1. **Install Dependencies**:
+1. **Clone Repository**:
+```bash
+git clone https://github.com/lexlapax/topics-insights.git
+cd topics-insights/frontend
+```
+
+2. **Install Dependencies**:
 ```bash
 npm install
 ```
 
-2. **Development Server**:
+3. **Development Server**:
 ```bash
 npm run dev
 ```
@@ -53,6 +63,7 @@ frontend/
 - ✅ TypeScript configuration
 - ✅ Jest + React Testing Library setup
 - ✅ ESLint + Prettier configuration
+- ✅ Git integration
 
 ## Available Scripts
 
@@ -79,20 +90,39 @@ tsc --noEmit
 
 ## Git Workflow
 
-1. **Initial Setup**:
+1. **Get Latest Code**:
 ```bash
-git init
-git add .
-git commit -m "feat: Initial frontend setup"
+git pull origin main
 ```
 
-2. **Development**:
+2. **Create Feature Branch**:
 ```bash
-git checkout -b feature/your-feature
-# Make changes
-git add .
-git commit -m "feat: Add your feature"
+git checkout -b feature/frontend-feature-name
 ```
+
+3. **Make Changes**:
+```bash
+# Make your changes
+# Run tests
+npm test
+# Lint and type check
+npm run lint
+tsc --noEmit
+# Commit
+git add .
+git commit -m "feat: your frontend feature description"
+```
+
+4. **Push Changes**:
+```bash
+git push origin feature/frontend-feature-name
+```
+
+5. **Create Pull Request**:
+- Visit: https://github.com/lexlapax/topics-insights/pulls
+- Click "New Pull Request"
+- Select your feature branch
+- Add description and request review
 
 ## License
 
