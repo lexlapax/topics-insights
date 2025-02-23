@@ -61,11 +61,19 @@ backend/
 ├── src/
 │   └── topic_insights/
 │       ├── __init__.py
-│       └── main.py          # FastAPI application
+│       ├── main.py          # FastAPI application
+│       ├── agents/          # LLM agents and tools
+│       │   ├── __init__.py
+│       │   ├── base.py     # Base agent classes
+│       │   └── tools.py    # Custom agent tools
+│       └── models/         # Pydantic models
+│           ├── __init__.py
+│           └── agents.py   # Agent-related models
 ├── tests/
-│   └── test_health.py       # Health endpoint tests
-├── pyproject.toml          # Project configuration
-└── README.md              # This file
+│   ├── test_health.py      # Health endpoint tests
+│   └── test_agents/       # Agent tests
+├── pyproject.toml         # Project configuration
+└── README.md             # This file
 ```
 
 ## Current Features
@@ -76,6 +84,104 @@ backend/
 - ✅ Test infrastructure (pytest + coverage)
 - ✅ Code quality tools (Black + Ruff + MyPy)
 - ✅ Git integration
+- ⏳ LLM integration with Pydantic-AI (in progress)
+
+## LLM Integration with Pydantic-AI
+
+### Overview
+The project uses Pydantic-AI for LLM-powered agents that analyze and extract insights from topics. This integration provides:
+- Type-safe LLM function calls
+- Structured agent interactions
+- Built-in validation and parsing
+- Support for multiple LLM providers
+
+### Setup LLM Integration
+
+1. **Install Additional Dependencies**:
+```bash
+uv pip install "pydantic-ai[all]" "openai>=1.0.0" "instructor"
+```
+
+2. **Configure Environment Variables**:
+```bash
+# Add to .env file
+OPENAI_API_KEY=your_api_key_here
+ANTHROPIC_API_KEY=your_api_key_here  # If using Claude
+```
+
+### Agent Architecture
+
+The project uses a multi-agent system for topic analysis:
+
+1. **Topic Analyzer Agent**
+   - Analyzes topic content and structure
+   - Extracts key themes and patterns
+   - Uses Pydantic models for structured output
+
+2. **Insight Generator Agent**
+   - Generates insights based on analysis
+   - Provides recommendations and connections
+   - Validates outputs against defined schemas
+
+### Example Agent Usage
+
+```python
+from pydantic_ai import Agent, Tool
+from pydantic import BaseModel
+
+class TopicAnalysis(BaseModel):
+    main_themes: list[str]
+    key_insights: list[str]
+    sentiment: str
+
+class TopicAnalyzer(Agent):
+    def analyze_topic(self, content: str) -> TopicAnalysis:
+        """Analyze the given topic content."""
+        return self.run(
+            system_prompt="You are a topic analysis expert...",
+            human_message=f"Analyze this topic: {content}",
+            output_model=TopicAnalysis
+        )
+```
+
+### Available Tools
+
+The agents have access to various tools:
+- Content Summarization
+- Sentiment Analysis
+- Theme Extraction
+- Pattern Recognition
+- Cross-Reference Analysis
+
+### Best Practices
+
+1. **Prompt Engineering**
+   - Use clear and specific system prompts
+   - Include examples in few-shot prompts
+   - Validate outputs against schemas
+
+2. **Error Handling**
+   - Handle LLM API errors gracefully
+   - Implement retry mechanisms
+   - Validate responses against expected formats
+
+3. **Cost Management**
+   - Use appropriate model tiers
+   - Implement token counting
+   - Cache responses when possible
+
+### Testing Agents
+
+```python
+# In tests/test_agents/test_analyzer.py
+from topic_insights.agents import TopicAnalyzer
+
+def test_topic_analysis():
+    analyzer = TopicAnalyzer()
+    result = analyzer.analyze_topic("Sample topic content...")
+    assert isinstance(result, TopicAnalysis)
+    assert len(result.main_themes) > 0
+```
 
 ## TODO List
 
