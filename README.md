@@ -2,11 +2,76 @@
 
 A web application for analyzing and extracting insights from topics using LLM-based agents.
 
+## Development Philosophy
+
+This project follows a strict test-driven development (TDD) approach. All features must:
+1. Start with tests before implementation
+2. Maintain high test coverage (minimum 70%)
+3. Run tests after every code change, no matter how trivial
+
+## Current Status
+
+### Implemented Features
+- ✅ OpenAI GPT-4o agent integration
+- ✅ Topic analysis capabilities
+- ✅ Content summarization
+- ✅ Entity extraction
+- ✅ Question generation
+- ✅ Test infrastructure with 70% coverage
+- ✅ Environment configuration
+
+### Pending Features
+- ⏳ Frontend implementation
+- ⏳ Database integration
+- ⏳ User authentication
+- ⏳ API endpoints
+- ⏳ Background tasks
+
 ## Prerequisites
 
 - Python 3.9 or higher
 - Node.js 18.17.0 or higher (use nvm)
 - Git
+
+## Development Workflow
+
+### 1. Write Tests First
+```bash
+# Create new test file
+touch tests/new_feature_test.py
+
+# Write tests
+# Example:
+def test_new_feature():
+    result = new_feature()
+    assert result == expected_value
+
+# Run tests (should fail)
+pytest tests/new_feature_test.py -v
+```
+
+### 2. Implement Feature
+```bash
+# Create implementation file
+touch src/topic_insights/new_feature.py
+
+# Implement feature
+# Run tests frequently
+pytest tests/new_feature_test.py -v
+```
+
+### 3. Refactor and Verify
+```bash
+# After implementation, run all tests
+pytest
+
+# Check coverage
+pytest --cov=topic_insights --cov-report=term-missing
+
+# Run linting
+ruff check .
+black .
+```
 
 ## Setup and Run Instructions
 
@@ -26,181 +91,109 @@ python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
-pip install uv
-uv pip install -e ".[dev]"
+pip install -e ".[dev]"
 
-# Run tests
+# Run tests (required before any development)
 pytest  # Basic tests
 pytest --cov  # With coverage
-
-# Start backend server
-uvicorn topic_insights.main:app --reload --port 8000
 ```
 
-### 3. Frontend Setup (in new terminal)
+### 3. Environment Configuration
+
+Create a `.env` file in the backend directory with the following content:
 ```bash
-# Navigate to frontend
-cd frontend
+# OpenAI Configuration
+OPENAI_API_KEY=your-api-key-here
+OPENAI_MODEL=gpt-4o  # Recommended model for optimal performance
 
-# Use correct Node.js version
-nvm use 18.17.0  # Install if needed: nvm install 18.17.0
+# Application Configuration
+APP_ENV=development
+DEBUG=True
+LOG_LEVEL=INFO
 
-# Install dependencies
-npm install
-
-# Run tests
-npm test  # Basic tests
-npm run test:watch  # Watch mode
-
-# Start frontend server
-npm run dev
+# API Configuration
+API_VERSION=v1
+API_PREFIX=/api/v1
 ```
 
-### 4. Verify Setup
+### 4. Example Usage
 
-1. Backend Health Check (in new terminal):
-```bash
-curl http://localhost:8000/api/v1/health
-```
-Expected output:
-```json
-{
-  "status": "ok",
-  "version": "0.1.0",
-  "services": {
-    "api": "healthy",
-    "database": "not_configured",
-    "llm": "not_configured"
-  }
-}
-```
+```python
+from topic_insights.agents.openai_agent import OpenAIAgent
+import asyncio
 
-2. Frontend: Open http://localhost:3000 in your browser
-- Should see Topic Insights homepage
-- Health status section showing backend status
-- Chakra UI styling applied
+async def analyze_topic():
+    agent = OpenAIAgent()
+    await agent.initialize()
+    
+    try:
+        result = await agent.analyze_topic("Climate change")
+        print(result["analysis"])
+        
+        # Generate follow-up questions
+        questions = await agent.generate_questions(result["analysis"])
+        print("\nFollow-up questions:")
+        for i, question in enumerate(questions, 1):
+            print(f"{i}. {question}")
+    finally:
+        await agent.cleanup()
 
-## Current State
-
-### Backend
-- ✅ FastAPI 0.104.0 setup
-- ✅ Health check endpoints
-- ✅ CORS configuration
-- ✅ Test infrastructure (pytest + coverage)
-- ✅ Code quality tools (Black + Ruff + MyPy)
-- ✅ Git integration
-- ⏳ Supabase integration (pending)
-- ⏳ LLM agent integration (pending)
-
-### Frontend
-- ✅ Next.js 14.1.0 setup
-- ✅ React Query v5 integration
-- ✅ Chakra UI v2 integration
-- ✅ TypeScript configuration
-- ✅ Jest + React Testing Library setup
-- ✅ ESLint + Prettier configuration
-- ✅ Git integration
-- ⏳ Topic analysis UI (pending)
-
-## TODO List
-
-### High Priority
-1. Backend:
-   - [ ] Set up Supabase client and database schema
-   - [ ] Implement user authentication
-   - [ ] Create topic management endpoints
-   - [ ] Add error handling middleware
-
-2. Frontend:
-   - [ ] Create authentication pages (login/register)
-   - [ ] Add topic creation form
-   - [ ] Implement topic list view
-   - [ ] Add error boundaries and loading states
-
-### Medium Priority
-1. Backend:
-   - [ ] Set up LLM integration
-   - [ ] Add request validation
-   - [ ] Implement rate limiting
-   - [ ] Add API documentation
-
-2. Frontend:
-   - [ ] Add topic detail view
-   - [ ] Create reusable components
-   - [ ] Implement data caching
-   - [ ] Add form validation
-
-### Low Priority
-1. Backend:
-   - [ ] Add logging system
-   - [ ] Implement background tasks
-   - [ ] Add metrics collection
-   - [ ] Create admin endpoints
-
-2. Frontend:
-   - [ ] Add dark mode support
-   - [ ] Implement keyboard shortcuts
-   - [ ] Add analytics tracking
-   - [ ] Create mobile-responsive design
-
-## Development
-
-### Git Workflow
-
-1. **Get Latest Code**:
-```bash
-git pull origin main
+if __name__ == "__main__":
+    asyncio.run(analyze_topic())
 ```
 
-2. **Create Feature Branch**:
-```bash
-git checkout -b feature/your-feature-name
+## Project Structure
+
+```
+topic-insights/
+├── backend/
+│   ├── src/
+│   │   └── topic_insights/
+│   │       ├── agents/
+│   │       │   ├── base.py
+│   │       │   └── openai_agent.py
+│   │       └── main.py
+│   ├── tests/  # Tests mirror src structure
+│   │   └── agents/
+│   │       └── test_openai_agent.py
+│   ├── .env.example
+│   └── pyproject.toml
+└── frontend/
+    └── [To be implemented]
 ```
 
-3. **Make Changes**:
-```bash
-# Make your changes
-git add .
-git commit -m "feat: your feature description"
-```
+## Development Guidelines
 
-4. **Push Changes**:
-```bash
-git push origin feature/your-feature-name
-```
-
-5. **Create Pull Request**:
-- Visit: https://github.com/lexlapax/topics-insights/pulls
-- Click "New Pull Request"
-- Select your feature branch
-- Add description and request review
-
-### Branch Protection Rules
-
-The `main` branch is protected with the following rules:
-- Require pull request before merging
-- Require 1 approval for pull requests
-- Dismiss stale pull request approvals when new commits are pushed
-- Require conversation resolution before merging
-- No direct pushes to main branch
+### Test-First Development
+- Write tests before implementing features
+- Run tests after every code change
+- Keep test coverage above 70%
+- Tests should be descriptive and serve as documentation
 
 ### Code Style
-
 - Backend: Black + Ruff for Python code
-- Frontend: ESLint + Prettier for TypeScript/React code
+- Tests: pytest with asyncio support
+- Type hints: Required for all Python code
+- Documentation: Docstrings for all classes and functions
 
-## Troubleshooting
+### Testing
+Run tests with coverage:
+```bash
+pytest --cov=topic_insights --cov-report=term-missing
+```
 
-### Backend
-- **Tests fail**: Ensure virtual environment is activated and dependencies installed
-- **Server won't start**: Check if port 8000 is in use
-- **Import errors**: Verify you're in the correct directory with activated environment
+Current test coverage: 70%
+- OpenAI agent: 91% coverage
+- Base agent: 71% coverage
 
-### Frontend
-- **Tests fail**: Verify Node.js version (18.17.0+)
-- **Server won't start**: Check if port 3000 is in use
-- **Module errors**: Run `npm install` again
-- **Type errors**: Run `tsc --noEmit` to check types
+### Git Workflow
+1. Create feature branch
+2. Write tests for new feature
+3. Run tests (should fail)
+4. Implement feature
+5. Run tests (should pass)
+6. Refactor if needed (keep running tests)
+7. Create pull request
 
 ## License
 

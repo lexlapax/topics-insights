@@ -1,5 +1,55 @@
 # Product Requirements Document (PRD): Daily Topic News Summarizer
 
+## Development Philosophy
+
+### Test-Driven Development (TDD)
+This project follows a strict test-driven development approach. The workflow for any new feature or change is:
+
+1. **Write Tests First**
+   - Write test cases before implementing any functionality
+   - Tests should cover both happy path and edge cases
+   - Tests should be descriptive and serve as documentation
+   - Run tests to verify they fail (Red phase)
+
+2. **Implement Code**
+   - Write minimal code to make tests pass
+   - Focus on functionality, not optimization
+   - Run tests frequently during implementation
+   - Get to passing tests (Green phase)
+
+3. **Refactor**
+   - Clean up and optimize code while keeping tests green
+   - Improve code organization and readability
+   - Run tests after every refactoring step
+   - Maintain test coverage above 70%
+
+### Testing Guidelines
+- Every feature must have corresponding tests
+- Run tests after ANY code change, no matter how trivial
+- Test coverage is monitored and maintained
+- Tests should be:
+  - Independent (no test should depend on another)
+  - Repeatable (same results every time)
+  - Self-validating (no manual verification needed)
+  - Timely (written before the code they test)
+
+### Example Test-First Workflow
+```python
+# 1. Write test first
+def test_analyze_topic():
+    """Test topic analysis functionality."""
+    agent = OpenAIAgent(api_key="test-key", model="gpt-4o")
+    result = await agent.analyze_topic("test topic")
+    assert "analysis" in result
+    assert "tokens_used" in result
+    assert result["model"] == "gpt-4o"
+
+# 2. Run test (it should fail)
+# 3. Implement the feature
+# 4. Run test again (should pass)
+# 5. Refactor if needed (keep running tests)
+```
+
 **1. Introduction**
 
 This document outlines the requirements for a web application, "Topic Insights," designed to generate daily running news summaries around user-defined topics. The application leverages various APIs (search engines, news sites, YouTube, research paper sites) to gather, collate, deduplicate, and summarize news content, providing users with a comprehensive overview of developments in their areas of interest.
@@ -128,7 +178,53 @@ Topic Insights is a web application that automates the process of gathering, sum
 *   Develop a mobile app for on-the-go access.
 *   Personalize the user experience based on individual preferences and interests.
 
-This PRD serves as a living document and will be updated as the project evolves. It provides a clear understanding of the product vision, goals, and requirements for the development team. By adhering to these guidelines, we can ensure the successful delivery of Topic Insights, a valuable tool for staying informed and discovering new insights on any topic.
+**12. Development Process**
+
+### Test-First Implementation Order
+1. Core Agent Infrastructure
+   - Write base agent interface tests
+   - Implement base agent class
+   - Write OpenAI agent tests
+   - Implement OpenAI agent
+
+2. Data Processing
+   - Write tests for data fetching
+   - Implement API integrations
+   - Write tests for deduplication
+   - Implement deduplication logic
+
+3. Content Analysis
+   - Write tests for summarization
+   - Implement summary generation
+   - Write tests for entity extraction
+   - Implement entity extraction
+
+4. API Layer
+   - Write API endpoint tests
+   - Implement REST endpoints
+   - Write authentication tests
+   - Implement auth system
+
+5. Frontend Components
+   - Write component tests
+   - Implement UI components
+   - Write integration tests
+   - Implement page flows
+
+### Quality Gates
+- No code merges without passing tests
+- Minimum 70% test coverage for new code
+- All edge cases must be tested
+- Performance tests for critical paths
+- Integration tests for key workflows
+
+### Continuous Integration
+- Automated test runs on every commit
+- Coverage reports in pull requests
+- Performance benchmark tracking
+- Automated linting and type checking
+
+This PRD serves as a living document and will be updated as the project evolves. It provides a clear understanding of the product vision, goals, and requirements for the development team. By following the test-first approach and maintaining high test coverage, we ensure the reliability and maintainability of Topic Insights.
 content_copy
 download
 Use code with caution.

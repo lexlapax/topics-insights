@@ -45,4 +45,9 @@ coverage/
 .idea/
 .vscode/
 *.swp
-*.swo 
+*.swo
+*~
+
+# Project specific
+backend/.env
+frontend/.env 
