@@ -137,8 +137,17 @@ git push origin feature/your-feature-name
 - Select your feature branch
 - Add description and request review
 
+### Branch Protection Rules
+
+The `main` branch is protected with the following rules:
+- Require pull request before merging
+- Require 1 approval for pull requests
+- Dismiss stale pull request approvals when new commits are pushed
+- Require conversation resolution before merging
+- No direct pushes to main branch
+
 ### Branch Strategy
-- `main`: Production-ready code
+- `main`: Production-ready code (protected)
 - `develop`: Development branch
 - Feature branches: `feature/feature-name`
 
