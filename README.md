@@ -2,89 +2,96 @@
 
 A web application for analyzing and extracting insights from topics using LLM-based agents.
 
-## Repository
-
-- GitHub: https://github.com/lexlapax/topics-insights
-- Clone: `git clone https://github.com/lexlapax/topics-insights.git`
-
-## Project Structure
-
-```
-.
-├── backend/          # FastAPI backend service
-├── frontend/         # Next.js frontend application
-├── .gitignore       # Git ignore patterns
-└── README.md        # This file
-```
-
-## Quick Start
-
-### Prerequisites
+## Prerequisites
 
 - Python 3.9 or higher
-- Node.js 18.17 or higher (recommended: use nvm)
+- Node.js 18.17.0 or higher (use nvm)
 - Git
 
-### Clone Repository
+## Setup and Run Instructions
 
+### 1. Clone Repository
 ```bash
 git clone https://github.com/lexlapax/topics-insights.git
 cd topics-insights
 ```
 
-### Backend Setup
-
-1. **Setup Python Environment**:
+### 2. Backend Setup
 ```bash
+# Navigate to backend
 cd backend
+
+# Create and activate virtual environment
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
 pip install uv
 uv pip install -e ".[dev]"
-```
 
-2. **Run Backend**:
-```bash
+# Run tests
+pytest  # Basic tests
+pytest --cov  # With coverage
+
+# Start backend server
 uvicorn topic_insights.main:app --reload --port 8000
 ```
 
-3. **Run Tests**:
+### 3. Frontend Setup (in new terminal)
 ```bash
-pytest  # Run basic tests
-pytest --cov  # Run tests with coverage
-```
-
-The backend will be available at http://localhost:8000
-
-### Frontend Setup
-
-1. **Install Dependencies**:
-```bash
+# Navigate to frontend
 cd frontend
-npm install
-```
 
-2. **Run Frontend**:
-```bash
+# Use correct Node.js version
+nvm use 18.17.0  # Install if needed: nvm install 18.17.0
+
+# Install dependencies
+npm install
+
+# Run tests
+npm test  # Basic tests
+npm run test:watch  # Watch mode
+
+# Start frontend server
 npm run dev
 ```
 
-3. **Run Tests**:
-```bash
-npm test           # Run tests
-npm run test:watch # Run tests in watch mode
-```
+### 4. Verify Setup
 
-The frontend will be available at http://localhost:3000
-
-## Verify Setup
-
-1. Backend Health Check:
+1. Backend Health Check (in new terminal):
 ```bash
 curl http://localhost:8000/api/v1/health
 ```
+Expected output:
+```json
+{
+  "status": "ok",
+  "version": "0.1.0",
+  "services": {
+    "api": "healthy",
+    "database": "not_configured",
+    "llm": "not_configured"
+  }
+}
+```
 
 2. Frontend: Open http://localhost:3000 in your browser
+- Should see Topic Insights homepage
+- Health status section showing backend status
+- Chakra UI styling applied
+
+## Troubleshooting
+
+### Backend
+- **Tests fail**: Ensure virtual environment is activated and dependencies installed
+- **Server won't start**: Check if port 8000 is in use
+- **Import errors**: Verify you're in the correct directory with activated environment
+
+### Frontend
+- **Tests fail**: Verify Node.js version (18.17.0+)
+- **Server won't start**: Check if port 3000 is in use
+- **Module errors**: Run `npm install` again
+- **Type errors**: Run `tsc --noEmit` to check types
 
 ## Current Features
 
@@ -145,11 +152,6 @@ The `main` branch is protected with the following rules:
 - Dismiss stale pull request approvals when new commits are pushed
 - Require conversation resolution before merging
 - No direct pushes to main branch
-
-### Branch Strategy
-- `main`: Production-ready code (protected)
-- `develop`: Development branch
-- Feature branches: `feature/feature-name`
 
 ### Code Style
 
