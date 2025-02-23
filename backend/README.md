@@ -2,25 +2,30 @@
 
 FastAPI-based backend service for Topic Insights application.
 
-## Repository
+## Current State (2024-03-XX)
+- ✅ Initial cleanup and dependency optimization
+- ✅ Simplified health check implementation
+- ✅ All tests passing with coverage
+- ✅ Documentation updated to reflect current state
 
-This is part of the [Topic Insights](https://github.com/lexlapax/topics-insights) project.
+## Prerequisites
 
-## Setup
+- Python 3.12.x (required, not 3.13)
+- pip or uv package installer
+- git
 
-1. **Clone Repository**:
+## Quick Start
+
+1. **Create Virtual Environment**:
 ```bash
-git clone https://github.com/lexlapax/topics-insights.git
-cd topics-insights/backend
-```
-
-2. **Create Virtual Environment**:
-```bash
-python -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Verify Python version
+python --version  # Should show Python 3.12.x
 ```
 
-3. **Install Dependencies**:
+2. **Install Dependencies**:
 ```bash
 # Install uv for faster package installation
 pip install uv
@@ -29,30 +34,19 @@ pip install uv
 uv pip install -e ".[dev]"
 ```
 
-## Development Server
+3. **Run Tests**:
+```bash
+# Run all tests with coverage
+pytest --cov
 
-Run the development server with auto-reload:
+# Run specific test file
+pytest tests/test_health.py -v
+```
+
+4. **Start Development Server**:
 ```bash
 uvicorn topic_insights.main:app --reload --port 8000
 ```
-
-## Testing
-
-```bash
-# Run all tests
-pytest
-
-# Run tests with coverage
-pytest --cov
-
-# Run tests with coverage HTML report
-pytest --cov --cov-report=html
-
-# Run specific test file
-pytest tests/test_health.py
-```
-
-View coverage report by opening `htmlcov/index.html` in your browser.
 
 ## Project Structure
 
@@ -64,61 +58,63 @@ backend/
 │       └── main.py          # FastAPI application
 ├── tests/
 │   └── test_health.py       # Health endpoint tests
-├── pyproject.toml          # Project configuration
-└── README.md              # This file
+└── pyproject.toml          # Project configuration
 ```
 
-## Current Features
-
-- ✅ FastAPI 0.104.0 setup
-- ✅ Health check endpoints
-- ✅ CORS configuration
-- ✅ Test infrastructure (pytest + coverage)
-- ✅ Code quality tools (Black + Ruff + MyPy)
-- ✅ Git integration
-
-## TODO List
-
-### High Priority
-- [ ] Set up Supabase client and database schema
-- [ ] Implement user authentication
-- [ ] Create topic management endpoints
-- [ ] Add error handling middleware
-
-### Medium Priority
-- [ ] Set up LLM integration
-- [ ] Add request validation
-- [ ] Implement rate limiting
-- [ ] Add API documentation
-
-### Low Priority
-- [ ] Add logging system
-- [ ] Implement background tasks
-- [ ] Add metrics collection
-- [ ] Create admin endpoints
-
-## API Endpoints
+## Available Endpoints
 
 ### Health Check
 - `GET /` - Basic service status
-- `GET /api/v1/health` - Detailed health status including service components
+  ```json
+  {"status": "ok", "service": "Topic Insights API"}
+  ```
+- `GET /api/v1/health` - Detailed health status
+  ```json
+  {
+    "status": "ok",
+    "version": "0.1.0",
+    "services": {
+      "api": "healthy",
+      "database": "not_configured",
+      "llm": "not_configured"
+    }
+  }
+  ```
 
 ## Development Tools
 
-- **Formatting**: Black
-  ```bash
-  black .
-  ```
+### Testing
+```bash
+# Run tests
+pytest
 
-- **Linting**: Ruff
-  ```bash
-  ruff check .
-  ```
+# Run tests with coverage
+pytest --cov
 
-- **Type Checking**: MyPy
-  ```bash
-  mypy .
-  ```
+# Run specific test
+pytest tests/test_health.py -v
+```
+
+### Code Quality
+```bash
+# Format code
+black .
+
+# Lint code
+ruff check .
+
+# Type check
+mypy .
+```
+
+### Dependencies
+```bash
+# Install only production dependencies
+uv pip install -e "."
+
+# Install with dev dependencies
+uv pip install -e ".[dev]"
+```
 
 ## Git Workflow
 
@@ -134,7 +130,6 @@ git checkout -b feature/backend-feature-name
 
 3. **Make Changes**:
 ```bash
-# Make your changes
 # Run tests
 pytest
 # Format and lint
@@ -150,18 +145,51 @@ git commit -m "feat: your backend feature description"
 git push origin feature/backend-feature-name
 ```
 
-5. **Create Pull Request**:
-- Visit: https://github.com/lexlapax/topics-insights/pulls
-- Click "New Pull Request"
-- Select your feature branch
-- Add description and request review
+5. **Create Pull Request** on GitHub
 
 ## Troubleshooting
 
-- **Tests fail**: Ensure virtual environment is activated and dependencies installed
-- **Server won't start**: Check if port 8000 is in use
-- **Import errors**: Verify you're in the correct directory with activated environment
-- **Dependency issues**: Try removing .venv and reinstalling dependencies
+### Common Issues
+
+1. **Wrong Python Version**
+```bash
+# Check version
+python --version
+
+# If incorrect:
+deactivate
+# Install Python 3.12.x and start over
+```
+
+2. **Package Installation Issues**
+```bash
+# Clean start
+deactivate
+rm -rf .venv
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install uv
+uv pip install -e ".[dev]"
+```
+
+3. **Test Failures**
+```bash
+# Run with verbose output
+pytest -v
+
+# Run specific test
+pytest tests/test_health.py -v
+```
+
+4. **Server Issues**
+```bash
+# Check port
+lsof -i :8000  # On Unix/macOS
+netstat -ano | findstr :8000  # On Windows
+
+# Start with different port
+uvicorn topic_insights.main:app --reload --port 8001
+```
 
 ## License
 

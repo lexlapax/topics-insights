@@ -1,28 +1,53 @@
 # Topic Insights
 
-A web application for analyzing and extracting insights from topics using LLM-based agents.
+A modern web application for topic analysis and insights.
+
+## Current State (2024-03-XX)
+
+### Recent Changes
+- ✅ Initial cleanup and dependency optimization
+- ✅ Simplified codebase structure
+- ✅ Removed unnecessary dependencies
+- ✅ All tests passing with coverage
+- ✅ Documentation updated to reflect current state
+
+### Frontend
+- Next.js 14.1.0 with App Router
+- React Query v5
+- Chakra UI v2
+- Jest + React Testing Library
+- TypeScript, ESLint, Prettier
+
+### Backend
+- FastAPI with Python 3.12.x
+- Pytest with coverage
+- Black, Ruff, MyPy
+- Minimal health check API
 
 ## Prerequisites
 
-- Python 3.9 or higher
-- Node.js 18.17.0 or higher (use nvm)
-- Git
+### Backend
+- Python 3.12.x (required, not 3.13)
+- pip or uv package installer
 
-## Setup and Run Instructions
+### Frontend
+- Node.js 20.x LTS
+- npm or yarn
 
-### 1. Clone Repository
+## Quick Start
+
+1. **Clone Repository**:
 ```bash
 git clone https://github.com/lexlapax/topics-insights.git
 cd topics-insights
 ```
 
-### 2. Backend Setup
+2. **Backend Setup**:
 ```bash
-# Navigate to backend
 cd backend
 
-# Create and activate virtual environment
-python -m venv .venv
+# Create virtual environment
+python3.12 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
@@ -30,122 +55,98 @@ pip install uv
 uv pip install -e ".[dev]"
 
 # Run tests
-pytest  # Basic tests
-pytest --cov  # With coverage
+pytest --cov
 
-# Start backend server
+# Start server
 uvicorn topic_insights.main:app --reload --port 8000
 ```
 
-### 3. Frontend Setup (in new terminal)
+3. **Frontend Setup**:
 ```bash
-# Navigate to frontend
-cd frontend
-
-# Use correct Node.js version
-nvm use 18.17.0  # Install if needed: nvm install 18.17.0
+cd ../frontend
 
 # Install dependencies
 npm install
 
 # Run tests
-npm test  # Basic tests
-npm run test:watch  # Watch mode
+npm run test:coverage
 
-# Start frontend server
+# Start development server
 npm run dev
 ```
 
-### 4. Verify Setup
+Visit:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
 
-1. Backend Health Check (in new terminal):
-```bash
-curl http://localhost:8000/api/v1/health
+## Project Structure
+
 ```
-Expected output:
-```json
-{
-  "status": "ok",
-  "version": "0.1.0",
-  "services": {
-    "api": "healthy",
-    "database": "not_configured",
-    "llm": "not_configured"
-  }
-}
+.
+├── backend/
+│   ├── src/
+│   │   └── topic_insights/
+│   │       ├── __init__.py
+│   │       └── main.py
+│   ├── tests/
+│   └── pyproject.toml
+│
+├── frontend/
+│   ├── src/
+│   │   └── app/
+│   │       ├── layout.tsx
+│   │       ├── page.tsx
+│   │       └── providers.tsx
+│   ├── __tests__/
+│   └── package.json
+│
+└── README.md
 ```
 
-2. Frontend: Open http://localhost:3000 in your browser
-- Should see Topic Insights homepage
-- Health status section showing backend status
-- Chakra UI styling applied
-
-## Current State
+## Available Endpoints
 
 ### Backend
-- ✅ FastAPI 0.104.0 setup
-- ✅ Health check endpoints
-- ✅ CORS configuration
-- ✅ Test infrastructure (pytest + coverage)
-- ✅ Code quality tools (Black + Ruff + MyPy)
-- ✅ Git integration
-- ⏳ Supabase integration (pending)
-- ⏳ LLM agent integration (pending)
+- `GET /` - Basic service status
+- `GET /api/v1/health` - Detailed health status
 
 ### Frontend
-- ✅ Next.js 14.1.0 setup
-- ✅ React Query v5 integration
-- ✅ Chakra UI v2 integration
-- ✅ TypeScript configuration
-- ✅ Jest + React Testing Library setup
-- ✅ ESLint + Prettier configuration
-- ✅ Git integration
-- ⏳ Topic analysis UI (pending)
-
-## TODO List
-
-### High Priority
-1. Backend:
-   - [ ] Set up Supabase client and database schema
-   - [ ] Implement user authentication
-   - [ ] Create topic management endpoints
-   - [ ] Add error handling middleware
-
-2. Frontend:
-   - [ ] Create authentication pages (login/register)
-   - [ ] Add topic creation form
-   - [ ] Implement topic list view
-   - [ ] Add error boundaries and loading states
-
-### Medium Priority
-1. Backend:
-   - [ ] Set up LLM integration
-   - [ ] Add request validation
-   - [ ] Implement rate limiting
-   - [ ] Add API documentation
-
-2. Frontend:
-   - [ ] Add topic detail view
-   - [ ] Create reusable components
-   - [ ] Implement data caching
-   - [ ] Add form validation
-
-### Low Priority
-1. Backend:
-   - [ ] Add logging system
-   - [ ] Implement background tasks
-   - [ ] Add metrics collection
-   - [ ] Create admin endpoints
-
-2. Frontend:
-   - [ ] Add dark mode support
-   - [ ] Implement keyboard shortcuts
-   - [ ] Add analytics tracking
-   - [ ] Create mobile-responsive design
+- `/` - Home page with service status
 
 ## Development
 
-### Git Workflow
+### Running Tests
+
+**Backend**:
+```bash
+cd backend
+pytest --cov
+```
+
+**Frontend**:
+```bash
+cd frontend
+npm run test:coverage
+```
+
+### Code Quality
+
+**Backend**:
+```bash
+cd backend
+black .      # Format
+ruff check . # Lint
+mypy .       # Type check
+```
+
+**Frontend**:
+```bash
+cd frontend
+npm run format     # Format
+npm run lint      # Lint
+npm run type-check # Type check
+```
+
+## Git Workflow
 
 1. **Get Latest Code**:
 ```bash
@@ -159,7 +160,15 @@ git checkout -b feature/your-feature-name
 
 3. **Make Changes**:
 ```bash
-# Make your changes
+# Run tests
+cd backend && pytest
+cd ../frontend && npm run test
+
+# Format and lint
+cd backend && black . && ruff check .
+cd ../frontend && npm run format && npm run lint
+
+# Commit
 git add .
 git commit -m "feat: your feature description"
 ```
@@ -169,38 +178,50 @@ git commit -m "feat: your feature description"
 git push origin feature/your-feature-name
 ```
 
-5. **Create Pull Request**:
-- Visit: https://github.com/lexlapax/topics-insights/pulls
-- Click "New Pull Request"
-- Select your feature branch
-- Add description and request review
-
-### Branch Protection Rules
-
-The `main` branch is protected with the following rules:
-- Require pull request before merging
-- Require 1 approval for pull requests
-- Dismiss stale pull request approvals when new commits are pushed
-- Require conversation resolution before merging
-- No direct pushes to main branch
-
-### Code Style
-
-- Backend: Black + Ruff for Python code
-- Frontend: ESLint + Prettier for TypeScript/React code
+5. **Create Pull Request** on GitHub
 
 ## Troubleshooting
 
-### Backend
-- **Tests fail**: Ensure virtual environment is activated and dependencies installed
-- **Server won't start**: Check if port 8000 is in use
-- **Import errors**: Verify you're in the correct directory with activated environment
+### Backend Issues
 
-### Frontend
-- **Tests fail**: Verify Node.js version (18.17.0+)
-- **Server won't start**: Check if port 3000 is in use
-- **Module errors**: Run `npm install` again
-- **Type errors**: Run `tsc --noEmit` to check types
+1. **Wrong Python Version**
+```bash
+# Check version
+python --version  # Should be 3.12.x
+
+# If incorrect:
+deactivate
+# Install Python 3.12.x and start over
+```
+
+2. **Package Installation Issues**
+```bash
+# Clean start
+deactivate
+rm -rf .venv
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install uv
+uv pip install -e ".[dev]"
+```
+
+### Frontend Issues
+
+1. **Wrong Node Version**
+```bash
+# Check version
+node --version  # Should be 20.x LTS
+
+# If incorrect:
+# Install Node.js 20.x LTS
+```
+
+2. **Module Resolution Issues**
+```bash
+# Clean install
+rm -rf node_modules .next
+npm install
+```
 
 ## License
 

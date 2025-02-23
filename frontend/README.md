@@ -2,114 +2,102 @@
 
 Next.js-based frontend for Topic Insights application.
 
-## Repository
+## Current State (2024-03-XX)
+- ✅ Initial cleanup and dependency optimization
+- ✅ Next.js 14.1.0 setup with App Router
+- ✅ React Query v5 integration
+- ✅ Chakra UI v2 setup
+- ✅ Jest + React Testing Library configuration
+- ✅ All tests passing with coverage
+- ✅ Documentation updated to reflect current state
 
-This is part of the [Topic Insights](https://github.com/lexlapax/topics-insights) project.
+## Prerequisites
 
-## Setup
+- Node.js 20.x (LTS)
+- npm or yarn
+- git
 
-1. **Clone Repository**:
+## Quick Start
+
+1. **Install Dependencies**:
 ```bash
-git clone https://github.com/lexlapax/topics-insights.git
-cd topics-insights/frontend
-```
-
-2. **Install Dependencies**:
-```bash
-# Use correct Node.js version
-nvm use 18.17.0  # Install if needed: nvm install 18.17.0
-
-# Install packages
 npm install
 ```
 
-3. **Development Server**:
+2. **Run Tests**:
+```bash
+# Run all tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+3. **Start Development Server**:
 ```bash
 npm run dev
 ```
 
-The application will be available at http://localhost:3000
-
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run tests with coverage
-npm run test:coverage
-```
+Visit `http://localhost:3000` to see the application.
 
 ## Project Structure
 
 ```
 frontend/
+├── __tests__/              # Test files
 ├── src/
-│   ├── app/
-│   │   ├── page.tsx        # Home page
-│   │   ├── layout.tsx      # Root layout
-│   │   └── providers.tsx   # App providers (React Query + Chakra UI)
-│   └── components/         # Shared components
-├── __tests__/             # Test files
-├── public/                # Static files
-├── package.json          # Project configuration
-└── README.md            # This file
+│   └── app/               # Next.js App Router
+│       ├── layout.tsx     # Root layout
+│       ├── page.tsx       # Home page
+│       └── providers.tsx  # App providers
+├── jest.config.js         # Jest configuration
+├── next.config.js         # Next.js configuration
+└── package.json          # Project configuration
 ```
-
-## Current Features
-
-- ✅ Next.js 14.1.0 setup
-- ✅ React Query v5 integration
-- ✅ Chakra UI v2 integration
-- ✅ TypeScript configuration
-- ✅ Jest + React Testing Library setup
-- ✅ ESLint + Prettier configuration
-- ✅ Git integration
-
-## TODO List
-
-### High Priority
-- [ ] Create authentication pages (login/register)
-- [ ] Add topic creation form
-- [ ] Implement topic list view
-- [ ] Add error boundaries and loading states
-
-### Medium Priority
-- [ ] Add topic detail view
-- [ ] Create reusable components
-- [ ] Implement data caching
-- [ ] Add form validation
-
-### Low Priority
-- [ ] Add dark mode support
-- [ ] Implement keyboard shortcuts
-- [ ] Add analytics tracking
-- [ ] Create mobile-responsive design
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build production bundle
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage
+```bash
+# Development
+npm run dev         # Start development server
+npm run build      # Build production bundle
+npm run start      # Start production server
+
+# Testing
+npm run test       # Run tests
+npm run test:watch # Run tests in watch mode
+npm run test:coverage # Run tests with coverage
+
+# Code Quality
+npm run lint       # Run ESLint
+npm run format     # Run Prettier
+npm run type-check # Run TypeScript checks
+```
 
 ## Development Tools
 
-- **Linting**:
+### Code Quality
 ```bash
+# Format code
+npm run format
+
+# Lint code
 npm run lint
+
+# Type check
+npm run type-check
 ```
 
-- **Type Checking**:
+### Testing
 ```bash
-# Run TypeScript compiler
-tsc --noEmit
+# Run all tests
+npm run test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run specific test file
+npm run test __tests__/page.test.tsx
 ```
 
 ## Git Workflow
@@ -126,12 +114,11 @@ git checkout -b feature/frontend-feature-name
 
 3. **Make Changes**:
 ```bash
-# Make your changes
 # Run tests
-npm test
-# Lint and type check
+npm run test
+# Format and lint
+npm run format
 npm run lint
-tsc --noEmit
 # Commit
 git add .
 git commit -m "feat: your frontend feature description"
@@ -142,19 +129,45 @@ git commit -m "feat: your frontend feature description"
 git push origin feature/frontend-feature-name
 ```
 
-5. **Create Pull Request**:
-- Visit: https://github.com/lexlapax/topics-insights/pulls
-- Click "New Pull Request"
-- Select your feature branch
-- Add description and request review
+5. **Create Pull Request** on GitHub
 
 ## Troubleshooting
 
-- **Tests fail**: Verify Node.js version (18.17.0+)
-- **Server won't start**: Check if port 3000 is in use
-- **Module errors**: Run `npm install` again
-- **Type errors**: Run `tsc --noEmit` to check types
-- **Jest errors**: Check babel configuration and test setup
+### Common Issues
+
+1. **Wrong Node Version**
+```bash
+# Check version
+node --version
+
+# If incorrect, install Node.js 20.x LTS
+```
+
+2. **Module Resolution Issues**
+```bash
+# Clean install
+rm -rf node_modules .next
+npm install
+```
+
+3. **Test Failures**
+```bash
+# Run with verbose output
+npm run test -- --verbose
+
+# Run specific test
+npm run test __tests__/page.test.tsx
+```
+
+4. **Development Server Issues**
+```bash
+# Check port
+lsof -i :3000  # On Unix/macOS
+netstat -ano | findstr :3000  # On Windows
+
+# Start with different port
+npm run dev -- -p 3001
+```
 
 ## License
 

@@ -1,8 +1,11 @@
 """
 Setup script for Supabase database schema and functions.
 """
-from supabase import create_client, Client
-from typing import List
+
+import sys
+from typing import NoReturn
+
+from supabase import Client, create_client
 
 SCHEMA_SQL = """
 -- Enable necessary extensions
@@ -153,7 +156,8 @@ END;
 $$ LANGUAGE plpgsql;
 """
 
-async def setup_database(client: Client):
+
+async def setup_database(client: Client) -> None:
     """Setup the Supabase database schema and functions."""
     try:
         # Execute schema SQL
@@ -165,13 +169,16 @@ async def setup_database(client: Client):
         print("✅ Functions created successfully")
 
     except Exception as e:
-        print(f"❌ Error setting up database: {str(e)}")
+        print(f"❌ Error setting up database: {e!s}")
         raise
 
-if __name__ == "__main__":
+
+def main() -> NoReturn:
+    """Main entry point for the setup script."""
     import asyncio
-    from dotenv import load_dotenv
     import os
+
+    from dotenv import load_dotenv
 
     load_dotenv()
 
@@ -179,7 +186,17 @@ if __name__ == "__main__":
     supabase_key = os.getenv("SUPABASE_KEY")
 
     if not all([supabase_url, supabase_key]):
-        raise ValueError("Missing Supabase credentials")
+        print("❌ Missing Supabase credentials")
+        sys.exit(1)
+
+    # Type assertion to satisfy mypy
+    assert supabase_url is not None
+    assert supabase_key is not None
 
     client = create_client(supabase_url, supabase_key)
-    asyncio.run(setup_database(client)) 
+    asyncio.run(setup_database(client))
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
