@@ -175,10 +175,6 @@ topic-insights/
 - testing code second
 
 ### Reference URLs to Load
-- @https://ai.pydantic.dev/ - PydanticAI documentation for AI agent development
-- @https://fastapi.tiangolo.com/reference/ - FastAPI reference for web API development
-- @https://supabase.com/docs/reference/python/start - Supabase Python client reference
-- @https://github.com/AtticusZeller/fastapi_supabase_template - FastAPI Supabase template reference
 
 ## License
 
